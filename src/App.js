@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import Colorbox from './components/Colorbox'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      colorBoxes: []
+    }
+  }
+
+  addBox = () => {
+    this.state.colorBoxes.push(<Colorbox />)
+    this.setState({ colorBoxes: this.state.colorBoxes})
+
+  }
+
+  removeBox = () => {
+    this.state.colorBoxes.pop()
+    this.setState({ colorBoxes: this.state.colorBoxes})
+  }
+  render() {
+    let boxes = this.state.colorBoxes.map((oneBox, index) => {
+      return(
+        <span key={ index }>{ oneBox }</span>
+      )
+    })
+    return(
+      <React.Fragment>
+      <h1>Colorbox</h1>
+      <button onClick={ this.addBox }>Add Box</button>
+      <button onClick={ this.removeBox }>Remove Box</button>
+      <div id="box-collection">
+        { boxes }
+
+
+      </div>
+
+      </React.Fragment>
+    )
+  }
+
 }
+
 
 export default App;
